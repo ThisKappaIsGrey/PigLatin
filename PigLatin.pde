@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.lang.*;
 public void setup() {
 	/*String lines[] = loadStrings("words.txt");
 	System.out.println("there are " + lines.length + " lines");
@@ -7,14 +7,20 @@ public void setup() {
 	  System.out.println(pigLatin(lines[i]));
 	} */
 	String lines[] = loadStrings("LowellHymn.txt");
+	String newLine = "";
+	String newWord = "";
 	for(int i = 0; i < lines.length; i++){
-		for(int x = 0; x < lines[i].length(); i++){
-			int index1 = x;
-			int index2 = x;
-			if(lines[i].charAt(x) != ' ' || lines[i].charAt(x) != ',' || lines[i].charAt(x) != '.'){
-					index2++;
+		newLine = "";
+		newWord = "";
+		for(int x = 0; x < lines[i].length(); x++){
+			if(Character.isLetter(lines[i].charAt(x))){
+				newWord += lines[i].substring(x, x+1);
+			}else{
+				newLine += pigLatin(newWord) + lines[i].substring(x, x+1);
+				newWord = "";
 			}
 		}
+		System.out.println(newLine);
 	}
 }
 public void draw()
@@ -31,6 +37,11 @@ public int findFirstVowel(String sWord)
       case 'i': return i;
       case 'o': return i;
       case 'u': return i;
+      case 'A': return i;
+      case 'E': return i;
+      case 'I': return i;
+      case 'O': return i;
+      case 'U': return i; 
     }
   }
 	return -1;
@@ -50,6 +61,6 @@ public String pigLatin(String sWord)
 	}else if(sWord.substring(0, 2).equals("qu")){
 		return sWord.substring(2) + "quay";
 	}else{
-		return sWord.substring(1) + sWord.substring(0, 1) + "ay";
+		return sWord.substring(findFirstVowel(sWord)) + sWord.substring(0, findFirstVowel(sWord)) + "ay";
 	}
 }
