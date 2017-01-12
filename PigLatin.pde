@@ -1,19 +1,19 @@
 import java.util.*;
 import java.lang.*;
 public void setup() {
-	/*String lines[] = loadStrings("words.txt");
+	String lines[] = loadStrings("words.txt");
 	System.out.println("there are " + lines.length + " lines");
 	for (int i = 0 ; i < lines.length; i++) {
 	  System.out.println(pigLatin(lines[i]));
-	} */
-	String lines[] = loadStrings("LowellHymn.txt");
+	} 
+	/*String lines[] = loadStrings("LowellHymn.txt");
 	String newLine = "";
-	String newWord = "";
-	for(int i = 0; i < lines.length; i++){
+	String newWord = "";*/
+	/*for(int i = 0; i < lines.length; i++){
 		newLine = "";
 		newWord = "";
 		for(int x = 0; x < lines[i].length(); x++){
-			if(Character.isLetter(lines[i].charAt(x))){
+			if(Character.isLetter(lines[i].charAt(x)) || lines[i].charAt(x) == '\'' || lines[i].charAt(x) == '-'){
 				newWord += lines[i].substring(x, x+1);
 			}else{
 				newLine += pigLatin(newWord) + lines[i].substring(x, x+1);
@@ -21,7 +21,7 @@ public void setup() {
 			}
 		}
 		System.out.println(newLine);
-	}
+	}*/
 }
 public void draw()
 {
@@ -58,9 +58,15 @@ public String pigLatin(String sWord)
 	else if(findFirstVowel(sWord) == 0)
 	{
 		return sWord + "way";
-	}else if(sWord.substring(0, 2).equals("qu")){
+	}else if(sWord.substring(0, 2).equals("qu") || sWord.substring(0, 2).equals("Qu")){
+		if(Character.isUpperCase(sWord.charAt(0))){
+			return sWord.substring(2, 3).toUpperCase()+ sWord.substring(3) + "quay";
+		}
 		return sWord.substring(2) + "quay";
 	}else{
+		if(Character.isUpperCase(sWord.charAt(0))){
+			return sWord.substring(findFirstVowel(sWord), findFirstVowel(sWord) +1).toUpperCase() + sWord.substring(findFirstVowel(sWord) +1) +  sWord.substring(0, findFirstVowel(sWord)).toLowerCase() + "ay"; 
+		}
 		return sWord.substring(findFirstVowel(sWord)) + sWord.substring(0, findFirstVowel(sWord)) + "ay";
 	}
 }
